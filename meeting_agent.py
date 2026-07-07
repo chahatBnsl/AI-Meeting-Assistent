@@ -72,102 +72,102 @@ def create_vectorstore(docs):
     embeddings = GoogleGenerativeAIEmbeddings( model="models/gemini-embedding-001",google_api_key=st.session_state["google_api_key"])
     return FAISS.from_documents(splits, embeddings)
 
-def run_crewai_analysis(setup, llm):
-    """Run CrewAI analysis for meeting preparation"""
-    attendees_text = "\n".join([f"- {attendee}" for attendee in setup['attendees']])
+# def run_crewai_analysis(setup, llm):
+#     """Run CrewAI analysis for meeting preparation"""
+#     attendees_text = "\n".join([f"- {attendee}" for attendee in setup['attendees']])
     
-    # Create agents
-    context_agent = Agent(
-        role='Context Analyst',
-        goal='Provide comprehensive context analysis for the meeting',
-        backstory="""You are an expert business analyst who specializes in preparing context documents for meetings. 
-        You thoroughly research companies and identify key stakeholders.""",
-        llm=llm,
-        verbose=True
-    )
+#     # Create agents
+#     context_agent = Agent(
+#         role='Context Analyst',
+#         goal='Provide comprehensive context analysis for the meeting',
+#         backstory="""You are an expert business analyst who specializes in preparing context documents for meetings. 
+#         You thoroughly research companies and identify key stakeholders.""",
+#         llm=llm,
+#         verbose=True
+#     )
     
-    strategy_agent = Agent(
-        role='Meeting Strategist',
-        goal='Create detailed meeting strategy and agenda',
-        backstory="""You are a seasoned meeting facilitator who excels at structuring effective business discussions.
-        You understand how to allocate time optimally.""",
-        llm=llm,
-        verbose=True
-    )
+#     strategy_agent = Agent(
+#         role='Meeting Strategist',
+#         goal='Create detailed meeting strategy and agenda',
+#         backstory="""You are a seasoned meeting facilitator who excels at structuring effective business discussions.
+#         You understand how to allocate time optimally.""",
+#         llm=llm,
+#         verbose=True
+#     )
     
-    brief_agent = Agent(
-        role='Executive Briefer',
-        goal='Generate executive briefing with actionable insights',
-        backstory="""You are a master communicator who specializes in crafting executive briefings.
-        You distill complex information into clear, concise documents.""",
-        llm=llm,
-        verbose=True
-    )
+#     brief_agent = Agent(
+#         role='Executive Briefer',
+#         goal='Generate executive briefing with actionable insights',
+#         backstory="""You are a master communicator who specializes in crafting executive briefings.
+#         You distill complex information into clear, concise documents.""",
+#         llm=llm,
+#         verbose=True
+#     )
     
-    # Create tasks
-    context_task = Task(
-        description=f"""Analyze the context for the meeting with {setup['company']}.
-Consider:
-1. Company background and market position
-2. Meeting objective: {setup['objective']}
-3. Attendees: {attendees_text}
-4. Focus areas: {setup['focus']}
+#     # Create tasks
+#     context_task = Task(
+#         description=f"""Analyze the context for the meeting with {setup['company']}.
+# Consider:
+# 1. Company background and market position
+# 2. Meeting objective: {setup['objective']}
+# 3. Attendees: {attendees_text}
+# 4. Focus areas: {setup['focus']}
 
-FORMAT IN MARKDOWN with clear headings.
-""",
-        agent=context_agent,
-        expected_output="""A markdown-formatted context analysis with sections for Executive Summary, 
-        Company Background, Situation Analysis, Key Stakeholders, and Strategic Considerations."""
-    )
+# FORMAT IN MARKDOWN with clear headings.
+# """,
+#         agent=context_agent,
+#         expected_output="""A markdown-formatted context analysis with sections for Executive Summary, 
+#         Company Background, Situation Analysis, Key Stakeholders, and Strategic Considerations."""
+#     )
     
-    strategy_task = Task(
-        description=f"""Develop a meeting strategy for the {setup['duration']}-minute meeting with {setup['company']}.
-Include:
-1. Time-boxed agenda with specific allocations
-2. Key talking points for each section
-3. Discussion questions and role assignments
+#     strategy_task = Task(
+#         description=f"""Develop a meeting strategy for the {setup['duration']}-minute meeting with {setup['company']}.
+# Include:
+# 1. Time-boxed agenda with specific allocations
+# 2. Key talking points for each section
+# 3. Discussion questions and role assignments
 
-FORMAT IN MARKDOWN with clear headings.
-""",
-        agent=strategy_agent,
-        expected_output="""A markdown-formatted meeting strategy with sections for Meeting Overview, 
-        Detailed Agenda, Key Talking Points, and Success Criteria."""
-    )
+# FORMAT IN MARKDOWN with clear headings.
+# """,
+#         agent=strategy_agent,
+#         expected_output="""A markdown-formatted meeting strategy with sections for Meeting Overview, 
+#         Detailed Agenda, Key Talking Points, and Success Criteria."""
+#     )
     
-    brief_task = Task(
-        description=f"""Create an executive briefing for the meeting with {setup['company']}.
-Include:
-1. Executive summary with key points
-2. Key talking points and recommendations
-3. Anticipated questions and prepared answers
+#     brief_task = Task(
+#         description=f"""Create an executive briefing for the meeting with {setup['company']}.
+# Include:
+# 1. Executive summary with key points
+# 2. Key talking points and recommendations
+# 3. Anticipated questions and prepared answers
 
-FORMAT IN MARKDOWN with clear headings.
-""",
-        agent=brief_agent,
-        expected_output="""A markdown-formatted executive briefing with sections for Executive Summary, 
-        Key Talking Points, Q&A Preparation, and Next Steps."""
-    )
+# FORMAT IN MARKDOWN with clear headings.
+# """,
+#         agent=brief_agent,
+#         expected_output="""A markdown-formatted executive briefing with sections for Executive Summary, 
+#         Key Talking Points, Q&A Preparation, and Next Steps."""
+#     )
     
-    # Run crew
-    crew = Crew(
-        agents=[context_agent, strategy_agent, brief_agent],
-        tasks=[context_task, strategy_task, brief_task],
-        verbose=True,
-        process=Process.sequential
-    )
+#     # Run crew
+#     crew = Crew(
+#         agents=[context_agent, strategy_agent, brief_agent],
+#         tasks=[context_task, strategy_task, brief_task],
+#         verbose=True,
+#         process=Process.sequential
+#     )
     
-    # Execute crew
-    return crew.kickoff()
+#     # Execute crew
+#     return crew.kickoff()
 
-def extract_content(result_item):
-    """Extract content from CrewAI result item"""
-    if hasattr(result_item, 'result'):
-        return result_item.result
-    if isinstance(result_item, dict) and 'result' in result_item:
-        return result_item['result']
-    if isinstance(result_item, str):
-        return result_item
-    return str(result_item)
+# def extract_content(result_item):
+#     """Extract content from CrewAI result item"""
+#     if hasattr(result_item, 'result'):
+#         return result_item.result
+#     if isinstance(result_item, dict) and 'result' in result_item:
+#         return result_item['result']
+#     if isinstance(result_item, str):
+#         return result_item
+#     return str(result_item)
 
 def fallback_analysis(setup, llm):
     """Fallback method if CrewAI fails"""
@@ -421,19 +421,19 @@ Attendees:
                 )              
                                 
                 # Try CrewAI approach first
-                try:
-                    result = run_crewai_analysis(setup, llm)
+                # try:
+                #     result = run_crewai_analysis(setup, llm)
                     
-                    if isinstance(result, list) and len(result) >= 3:
-                        context_content = extract_content(result[0])
-                        strategy_content = extract_content(result[1])
-                        brief_content = extract_content(result[2])
-                    else:
-                        raise Exception("CrewAI did not return expected format")
+                #     if isinstance(result, list) and len(result) >= 3:
+                #         context_content = extract_content(result[0])
+                #         strategy_content = extract_content(result[1])
+                #         brief_content = extract_content(result[2])
+                #     else:
+                #         raise Exception("CrewAI did not return expected format")
                     
-                except Exception as e:
-                    st.warning(f"Using fallback method. Error: {str(e)}")
-                    context_content, strategy_content, brief_content = fallback_analysis(setup, llm)
+                # except Exception as e:
+                #     st.warning(f"Using fallback method. Error: {str(e)}")
+                context_content, strategy_content, brief_content = fallback_analysis(setup, llm)
                 
                 # Store results
                 st.session_state.update({
