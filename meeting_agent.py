@@ -5,7 +5,7 @@ import pandas as pd
 from langchain_community.document_loaders import TextLoader, PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
-from langchain_community.vectorstores import chroma
+from langchain_community.vectorstores import Chroma
 from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
 # from crewai import Agent, Task, Crew
@@ -70,7 +70,7 @@ def create_vectorstore(docs):
     splits = text_splitter.split_documents(docs)
     
     embeddings = GoogleGenerativeAIEmbeddings( model="models/gemini-embedding-001",google_api_key=st.session_state["google_api_key"])
-    return chroma.from_documents(splits, embeddings)
+    return Chroma.from_documents(splits, embeddings)
 
 # def run_crewai_analysis(setup, llm):
 #     """Run CrewAI analysis for meeting preparation"""
