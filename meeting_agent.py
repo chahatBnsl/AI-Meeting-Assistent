@@ -8,8 +8,8 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGener
 from langchain_community.vectorstores import FAISS
 from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
-from crewai import Agent, Task, Crew
-from crewai.process import Process
+# from crewai import Agent, Task, Crew
+# from crewai.process import Process
 
 # Import utility classes
 from utils import TodoistTools, TranscriptExtractor, TelegramCommunicator, TaskExtractor, TodoistMeetingManager

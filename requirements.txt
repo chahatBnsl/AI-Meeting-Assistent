@@ -8,6 +8,25 @@
 # python-dotenv>=1.0.0
 # pypdf>=3.8.1
 # crewai>=0.28.5
+
+
+# streamlit==1.47.1
+
+# langchain==0.2.17
+# langchain-community==0.2.19
+# langchain-core==0.2.43
+
+# langchain-google-genai==1.0.10
+# google-generativeai==0.7.2
+
+# #faiss-cpu==1.8.0.post1
+# faiss-cpu==1.14.3
+# pandas==2.2.2
+# python-dotenv==1.0.1
+# pypdf==4.3.1
+
+# crewai==0.41.1
+
 streamlit==1.47.1
 
 langchain==0.2.17
@@ -17,10 +36,10 @@ langchain-core==0.2.43
 langchain-google-genai==1.0.10
 google-generativeai==0.7.2
 
-#faiss-cpu==1.8.0.post1
 faiss-cpu==1.14.3
-pandas==2.2.2
-python-dotenv==1.0.1
-pypdf==4.3.1
 
-crewai==0.41.1
+pandas==2.3.1
+
+python-dotenv==1.0.1
+
+pypdf==4.3.1
