@@ -70,7 +70,7 @@ def create_vectorstore(docs):
     splits = text_splitter.split_documents(docs)
     
     embeddings = GoogleGenerativeAIEmbeddings( model="models/gemini-embedding-001",google_api_key=st.session_state["google_api_key"])
-    return chromadb.from_documents(splits, embeddings)
+    return chroma.from_documents(splits, embeddings)
 
 # def run_crewai_analysis(setup, llm):
 #     """Run CrewAI analysis for meeting preparation"""
